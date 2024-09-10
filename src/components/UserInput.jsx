@@ -1,10 +1,8 @@
 import { USER_INPUT_TYPES } from "../util/constants";
 
-
-export default function UserInput({onInputChange, userInput}) {
-
+export default function UserInput({ onInputChange, userInput }) {
   console.log(userInput);
-  
+
   return (
     <section id="user-input">
       <div className="input-group">
@@ -56,10 +54,7 @@ export default function UserInput({onInputChange, userInput}) {
             required
             value={userInput.return}
             onChange={(event) =>
-              onInputChange(
-                USER_INPUT_TYPES.RATE_OF_RETURN,
-                event.target.value
-              )
+              onInputChange(USER_INPUT_TYPES.RATE_OF_RETURN, event.target.value)
             }
           />
         </p>
