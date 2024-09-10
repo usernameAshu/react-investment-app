@@ -10,12 +10,14 @@ function App() {
    */
   const [timeoutId, setTimeoutId] = useState(null);
 
+  const[processResults, setProcessResults] = useState(false);
+
   //manage state of User input
   const [userInput, setUserInput] = useState({
     initialInvestment: 100,
     annualInvestment: 10000,
     duration: 10,
-    return: 8,
+    expectedReturn: 8,
   });
 
   //separate state for Page value, since this will update instantly on page,
@@ -24,13 +26,15 @@ function App() {
     initialInvestment: 100,
     annualInvestment: 10000,
     duration: 10,
-    return: 8,
+    expectedReturn: 8,
   });
 
   function handleOnInputChange(inputIdentifier, newValue) {
-    setPageValue((prevUserInput) => {
+    setProcessResults(prevVal => false);
+    console.log("------------Entering App Component--------------");
+    setPageValue((prevPageVal) => {
       return {
-        ...prevUserInput,
+        ...prevPageVal,
         [inputIdentifier]: newValue,
       };
     });
@@ -45,22 +49,24 @@ function App() {
       setUserInput((prevUserInput) => {
         return {
           ...prevUserInput,
-          [inputIdentifier]: newValue,
+          [inputIdentifier]: +newValue,
         };
       });
       console.log(
         `New state for ${inputIdentifier} is ${newValue ? newValue : 0}`
       );
+      setProcessResults(prevVal => true);
     }, 1000);
 
     setTimeoutId((prevTimeoutId) => newTimeoutId);
   }
 
+  console.log("------------Rendering App Component--------------");
   return (
     <>
       <Header />
       <UserInput onInputChange={handleOnInputChange} userInput={pageValue} />
-      <Results />
+      {processResults && <Results input={userInput} />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { USER_INPUT_TYPES } from "../util/constants";
 
 export default function UserInput({ onInputChange, userInput }) {
+  console.log("------------Rendering UserInput Component--------------");
   console.log(userInput);
 
   return (
@@ -52,7 +53,7 @@ export default function UserInput({ onInputChange, userInput }) {
           <input
             type="number"
             required
-            value={userInput.return}
+            value={userInput.expectedReturn}
             onChange={(event) =>
               onInputChange(USER_INPUT_TYPES.RATE_OF_RETURN, event.target.value)
             }
