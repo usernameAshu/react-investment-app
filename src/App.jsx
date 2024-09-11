@@ -10,7 +10,7 @@ function App() {
    */
   const [timeoutId, setTimeoutId] = useState(null);
 
-  const[processResults, setProcessResults] = useState(false);
+  const [processResults, setProcessResults] = useState(false);
 
   //manage state of User input
   const [userInput, setUserInput] = useState({
@@ -29,8 +29,16 @@ function App() {
     expectedReturn: 8,
   });
 
+  const { initialInvestment, annualInvestment, duration, expectedReturn } =
+    userInput;
+  const isInputValid =
+    duration > 0 &&
+    expectedReturn > 0 &&
+    initialInvestment >= 0 &&
+    annualInvestment >= 0;
+
   function handleOnInputChange(inputIdentifier, newValue) {
-    setProcessResults(prevVal => false);
+    setProcessResults((prevVal) => false);
     console.log("------------Entering App Component--------------");
     setPageValue((prevPageVal) => {
       return {
@@ -55,7 +63,7 @@ function App() {
       console.log(
         `New state for ${inputIdentifier} is ${newValue ? newValue : 0}`
       );
-      setProcessResults(prevVal => true);
+      setProcessResults((prevVal) => true);
     }, 1000);
 
     setTimeoutId((prevTimeoutId) => newTimeoutId);
@@ -66,7 +74,8 @@ function App() {
     <>
       <Header />
       <UserInput onInputChange={handleOnInputChange} userInput={pageValue} />
-      {processResults && <Results input={userInput} />}
+      {processResults && isInputValid && <Results input={userInput} />}
+      {!isInputValid && <p>Invalid Input, please check the inputs</p>}
     </>
   );
 }
